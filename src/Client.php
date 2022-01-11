@@ -10,12 +10,18 @@ use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
 use Http\Client\Common\Plugin\RedirectPlugin;
 use Http\Discovery\Psr17FactoryDiscovery;
 use OwenVoke\CryptoScamDB\Api\AbstractApi;
+use OwenVoke\CryptoScamDB\Api\Check;
 use OwenVoke\CryptoScamDB\Exception\BadMethodCallException;
 use OwenVoke\CryptoScamDB\Exception\InvalidArgumentException;
 use OwenVoke\CryptoScamDB\HttpClient\Builder;
 use OwenVoke\CryptoScamDB\HttpClient\Plugin\Authentication;
+use OwenVoke\CryptoScamDB\HttpClient\Plugin\PathPrepend;
 use Psr\Http\Client\ClientInterface;
 
+/**
+ * @method Check check()
+ * @method Check checks()
+ */
 final class Client
 {
     public const AUTH_ACCESS_TOKEN = 'access_token_header';
@@ -33,6 +39,7 @@ final class Client
         ]));
 
         $builder->addHeaderValue('Accept', 'application/json');
+        $builder->addPlugin(new PathPrepend('/v1'));
     }
 
     public static function createWithHttpClient(ClientInterface $httpClient): self
@@ -46,6 +53,10 @@ final class Client
     public function api(string $name): AbstractApi
     {
         switch ($name) {
+            case 'check':
+            case 'checks':
+                return new Check($this);
+
             default:
                 throw new InvalidArgumentException(sprintf('Undefined api instance called: "%s"', $name));
         }
