@@ -1,0 +1,14 @@
+parameters:
+  level: 6
+  paths:
+    - src/
+
+  checkMissingIterableValueType: false
+  checkGenericClassInNonGenericObjectType: false
+  reportUnmatchedIgnoredErrors: true
+
+  ignoreErrors:
+  - message: '#Property (.*) is never read, only written\.#'
+    path: src/HttpClient/
+  - message: '#Variable \$parameters in empty\(\) always exists and is not falsy\.#'
+    path: src/Api/AbstractApi.php
