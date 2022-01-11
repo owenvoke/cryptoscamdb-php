@@ -2,7 +2,7 @@
 
 [Back to the navigation](README.md)
 
-Allows interacting with the [Assets API](https://docs.opensea.io/reference/getting-assets).
+Allows interacting with the Checks API.
 
 ### Retrieve the status of an address, IP, domain, or ENS name
 

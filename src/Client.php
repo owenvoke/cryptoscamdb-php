@@ -11,6 +11,7 @@ use Http\Client\Common\Plugin\RedirectPlugin;
 use Http\Discovery\Psr17FactoryDiscovery;
 use OwenVoke\CryptoScamDB\Api\AbstractApi;
 use OwenVoke\CryptoScamDB\Api\Check;
+use OwenVoke\CryptoScamDB\Api\Scam;
 use OwenVoke\CryptoScamDB\Exception\BadMethodCallException;
 use OwenVoke\CryptoScamDB\Exception\InvalidArgumentException;
 use OwenVoke\CryptoScamDB\HttpClient\Builder;
@@ -21,6 +22,8 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @method Check check()
  * @method Check checks()
+ * @method Scam scam()
+ * @method Scam scams()
  */
 final class Client
 {
@@ -56,6 +59,10 @@ final class Client
             case 'check':
             case 'checks':
                 return new Check($this);
+
+            case 'scam':
+            case 'scams':
+                return new Scam($this);
 
             default:
                 throw new InvalidArgumentException(sprintf('Undefined api instance called: "%s"', $name));
